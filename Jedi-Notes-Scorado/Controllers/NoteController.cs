@@ -30,9 +30,7 @@ namespace Jedi_Notes_Scorado.Controllers
         {
             try
             {
-                var note = _noteService.GetJediNote(id);
-
-                return note;
+                return _noteService.GetJediNote(id);
             }
             catch(Exception ex)
             {
@@ -69,8 +67,7 @@ namespace Jedi_Notes_Scorado.Controllers
         {
             try
             {
-                note.Updated = DateTime.Now;
-                _noteService.UpdateJediNote(note, id);
+                _noteService.UpdateJediNote(note);
             }
             catch(Exception ex)
             {
@@ -90,6 +87,20 @@ namespace Jedi_Notes_Scorado.Controllers
             {
                 _logger.LogError(ex, "Issue Deleting Note");
 
+            }
+        }
+
+        [HttpGet("Notes/{owner}/{rank}")]
+        public List<JediNote> GetNotes(string owner, eJediRank rank)
+        {
+            try
+            {
+                return _noteService.GetAllJediNotes(owner, rank);                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Issue Retreiving Notes List");
+                return null;
             }
         }
 

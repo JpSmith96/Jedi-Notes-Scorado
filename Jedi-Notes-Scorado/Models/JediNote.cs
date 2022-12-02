@@ -22,9 +22,10 @@
 
     public enum eJediRank
     {
-        Master,
-        Knight,
-        Padawan
+        Master = 0,
+        Knight = 1,
+        Padawan = 2,
+        NotFromAJedi = 9999
 
     }
 }
