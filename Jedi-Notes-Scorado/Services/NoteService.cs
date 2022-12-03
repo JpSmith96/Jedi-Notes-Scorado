@@ -51,7 +51,7 @@ VALUES
                 cmd.Parameters.AddWithValue("@title", note.Title);
                 cmd.Parameters.AddWithValue("@body", note.Body);
                 cmd.Parameters.AddWithValue("@owner", note.Owner);
-                cmd.Parameters.AddWithValue("@rank", note.JediRank);
+                cmd.Parameters.AddWithValue("@rank", note.JediRankType);
 
                 cmd.Connection.Open();
                 cmd.ExecuteNonQuery();
@@ -196,7 +196,7 @@ WHERE
                 cmd.Parameters.AddWithValue("@title", note.Title);
                 cmd.Parameters.AddWithValue("@body", note.Body);
                 cmd.Parameters.AddWithValue("@owner", note.Owner);
-                cmd.Parameters.AddWithValue("@rank", note.JediRank);
+                cmd.Parameters.AddWithValue("@rank", note.JediRankType);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
