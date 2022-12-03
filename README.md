@@ -124,7 +124,14 @@ Gets a list of notes based on 3 HTTP Get request parameters in the URL of the re
   <li>
     Rank: Int
     <ol>
-      <li>Will take the numerical value from the JediRankType eNum as a filter for the list, 0 returns any rank</li>
+      <li>Will take the numerical value from the JediRankType eNum as a filter for the list</li>
+      <ol>
+        <li>-1 Any Rank</li>
+        <li>0 Jedi Master</li>
+        <li>1 Jedi Knight</li>
+        <li>2 Jedi Padawan</li>
+        <li>9999 Not From A Jedi</li>
+      </ol>
     </ol>
   </li>
   <li>
