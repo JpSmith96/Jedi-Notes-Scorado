@@ -25,7 +25,7 @@ From swagger, the different HTTP requests will be listed with their parameters r
 ![image](https://user-images.githubusercontent.com/28155759/205456656-d8ced4a0-5f8e-494d-9026-b1598f20c903.png)
 ![image](https://user-images.githubusercontent.com/28155759/205456666-c84cb9d5-9a73-4b2d-ac2e-1f97ea06b781.png)
 
-Then enter the required parameters and click execute, you will see the return response under the Curl & Request URl
+Then enter the required parameters and click execute, you will see the return response under the Curl & Request URL
 ![image](https://user-images.githubusercontent.com/28155759/205456704-b8358ab1-2793-428d-9361-2d82a5ca7214.png)
 
 ### Definitions:
@@ -104,7 +104,7 @@ curl -X 'PUT' \
 ```
 
 #### DELETE Note
-Deletes a note from the database by passing in the Note's ID as a parameter int the HTTP Delete Request URL<br/>
+Deletes a note from the database by passing in the Note's ID as a parameter in the HTTP Delete Request URL<br/>
 <b>DELETE Example:</b> https://localhost:7125/Note/8 <br/>
 <b>Curl Example:</b>
 ```javascript
