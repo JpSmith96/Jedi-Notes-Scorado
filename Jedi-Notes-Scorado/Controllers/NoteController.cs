@@ -25,7 +25,7 @@ namespace Jedi_Notes_Scorado.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("Note/{id:int}")]
+        [HttpGet("{id:int}")]
         public JediNote GetNote(int id)
         {
             try
@@ -44,7 +44,7 @@ namespace Jedi_Notes_Scorado.Controllers
         /// Create a new note with note as object
         /// </summary>
         /// <param name="note"></param>
-        [HttpPost("Note")]
+        [HttpPost]
         public void CreateNote([FromBody]JediNote note)
         {
             try
@@ -62,8 +62,8 @@ namespace Jedi_Notes_Scorado.Controllers
         /// </summary>
         /// <param name="note"></param>
         /// <param name="id"></param>
-        [HttpPut("Note/{id:int}")]
-        public void UpdateNote([FromBody]JediNote note, int id)
+        [HttpPut()]
+        public void UpdateNote([FromBody]JediNote note)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Jedi_Notes_Scorado.Controllers
             }
         }
 
-        [HttpDelete("Note/{id:int}")]
+        [HttpDelete("{id:int}")]
         public void DeleteNote(int id)
         {
             try
@@ -90,12 +90,12 @@ namespace Jedi_Notes_Scorado.Controllers
             }
         }
 
-        [HttpGet("Notes/{owner}/{rank}")]
-        public List<JediNote> GetNotes(string owner, eJediRank rank)
+        [HttpGet("Notes/{isSortDescending:bool?}/{rank}/{owner?}")]
+        public List<JediNote> GetNotes(bool isSortDescending,eJediRank rank,string owner = "" )
         {
             try
             {
-                return _noteService.GetAllJediNotes(owner, rank);                
+                return _noteService.GetAllJediNotes(isSortDescending,rank,owner);                
             }
             catch (Exception ex)
             {

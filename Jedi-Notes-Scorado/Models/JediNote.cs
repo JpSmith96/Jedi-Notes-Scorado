@@ -8,9 +8,9 @@
 
         public string Body { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
 
-        public DateTime Updated { get; set; }   
+        public DateTime? Updated { get; set; }   
 
 
         //outside of the exercise, I can see owner and Jedi Rank being split of into it's own class (JediPersonnel perhaps)
@@ -22,10 +22,11 @@
 
     public enum eJediRank
     {
+        Any= -1,
         Master = 0,
         Knight = 1,
         Padawan = 2,
-        NotFromAJedi = 9999
+        NotFromAJedi = 3 //little easter-egg, couldn't help myself.
 
     }
 }

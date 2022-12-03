@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Note]
 (
-	ID INT NOT NULL PRIMARY KEY,
+	ID INT NOT NULL PRIMARY KEY IDENTITY(1,1), --use identity speculation to increment the id's
 	Title VARCHAR(256) NOT NULL,
 	Body VARCHAR(MAX) NULL,
 	Created DATETIME NOT NULL,

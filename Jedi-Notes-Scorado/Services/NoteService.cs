@@ -23,7 +23,7 @@ namespace Jedi_Notes_Scorado.Services
 
         public void DeleteJediNote(int id);
 
-        public List<JediNote> GetAllJediNotes(string owner, eJediRank rank);
+        public List<JediNote> GetAllJediNotes(bool isSortDescending, eJediRank rank, string owner = "");
 
     }
 
@@ -34,7 +34,7 @@ namespace Jedi_Notes_Scorado.Services
 
         public NoteService()
         {
-            conn = new SqlConnection();
+            conn = new SqlConnection("Data Source=scoradojedinotes.cxfxs9lbefkw.us-east-1.rds.amazonaws.com;Initial Catalog=JediNotes;User id=admin;Password=123test123;");
         }
 
         public void CreateJediNote(JediNote note)
@@ -77,13 +77,13 @@ WHERE
             }
         }
 
-        public List<JediNote> GetAllJediNotes(string owner, eJediRank rank)
+        public List<JediNote> GetAllJediNotes(bool isSortDescending, eJediRank rank, string owner = "")
         {
             var list = new List<JediNote>();
 
             using (var cmd = new SqlCommand())
             {
-                var conn = new SqlConnection();
+                cmd.Connection = conn;
                 cmd.CommandText = @"
 SELECT
     *
@@ -91,15 +91,20 @@ FROM
     [Note]
 WHERE
     Owner LIKE @owner
+
 ";
+
 
                 cmd.Parameters.AddWithValue("@owner", $"%{owner}%"); //allows for wild-card searching
 
-                if (rank != eJediRank.NotFromAJedi)
+                if (rank != eJediRank.Any)
                 {
                     cmd.CommandText += " OR Rank = @rank";
                     cmd.Parameters.AddWithValue("@rank", (int)rank);
                 }
+
+                cmd.CommandText += $" ORDER BY [Created] {(isSortDescending ? "DESC" : "")}";
+
 
                 conn.Open();
 
@@ -115,10 +120,10 @@ WHERE
                             ID = reader.GetInt32("ID"),
                             Title = reader["Title"].ToString(),
                             Body = reader["Body"].ToString(),
-                            Created = reader.GetDateTime("Created"),
-                            Updated = reader.GetDateTime("Updated"),
+                            Created = reader.IsDBNull("Created") ? null : reader.GetDateTime("Created"),
+                            Updated = reader.IsDBNull("Updated") ? null : reader.GetDateTime("Updated"),
                             Owner = reader["Owner"].ToString(),
-                            JediRank = reader.IsDBNull(ordinal) ? eJediRank.NotFromAJedi : (eJediRank)(int)reader["Rank"]
+                            JediRank = reader.IsDBNull(ordinal) ? eJediRank.NotFromAJedi : (eJediRank)reader["Rank"]
                         });
                     }
                 }
@@ -150,17 +155,19 @@ WHERE
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
                 {
+
+
                     if (reader.Read()) //only expecting 1 result, so no need for loop here
                     {
                         note.ID = id;
                         note.Title = reader["Title"].ToString();
                         note.Body = reader["Body"].ToString();
-                        note.Created = reader.GetDateTime("Created");
-                        note.Updated = reader.GetDateTime("Updated");
+                        note.Created = reader.IsDBNull("Created") ? null : reader.GetDateTime("Created");
+                        note.Updated = reader.IsDBNull("Updated") ? null : reader.GetDateTime("Updated");
                         note.Owner = reader["Owner"].ToString();
 
                         int ordinal = reader.GetOrdinal("Rank");
-                        note.JediRank = reader.IsDBNull(ordinal) ? eJediRank.NotFromAJedi : (eJediRank)(int)reader["Rank"];
+                        note.JediRank = reader.IsDBNull(ordinal) ? eJediRank.NotFromAJedi : (eJediRank)reader["Rank"];
                     }
                 }
             }
@@ -189,7 +196,7 @@ WHERE
                 cmd.Parameters.AddWithValue("@title", note.Title);
                 cmd.Parameters.AddWithValue("@body", note.Body);
                 cmd.Parameters.AddWithValue("@owner", note.Owner);
-                cmd.Parameters.AddWithValue("@rank", (int)note.JediRank); //pass in int for storage
+                cmd.Parameters.AddWithValue("@rank", note.JediRank);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
