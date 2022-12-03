@@ -81,6 +81,13 @@ WHERE
         {
             var list = new List<JediNote>();
 
+
+            //if owner filter is white spice, just revert
+            //to empty string so the wildcard search on SQL
+            //returns notes from any owner
+            if (string.IsNullOrWhiteSpace(owner))
+                owner = string.Empty; 
+
             using (var cmd = new SqlCommand())
             {
                 cmd.Connection = conn;
@@ -99,7 +106,7 @@ WHERE
 
                 if (rank != eJediRank.Any)
                 {
-                    cmd.CommandText += " OR Rank = @rank";
+                    cmd.CommandText += " AND Rank = @rank";
                     cmd.Parameters.AddWithValue("@rank", (int)rank);
                 }
 

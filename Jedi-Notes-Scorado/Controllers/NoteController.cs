@@ -90,6 +90,13 @@ namespace Jedi_Notes_Scorado.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a list of all notes by rank and owner with a bool to sort by either ascending or descending
+        /// </summary>
+        /// <param name="isSortDescending">false</param>
+        /// <param name="rank">0</param>
+        /// <param name="owner"></param>
+        /// <returns></returns>
         [HttpGet("Notes/{isSortDescending:bool?}/{rank}/{owner?}")]
         public List<JediNote> GetNotes(bool isSortDescending,eJediRank rank,string owner = "" )
         {

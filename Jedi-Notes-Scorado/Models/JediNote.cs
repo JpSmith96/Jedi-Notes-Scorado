@@ -28,7 +28,7 @@
         Master = 0,
         Knight = 1,
         Padawan = 2,
-        NotFromAJedi = 3 //little easter-egg, couldn't help myself.
+        NotFromAJedi = 9999 //little easter-egg, couldn't help myself.
 
     }
 }
