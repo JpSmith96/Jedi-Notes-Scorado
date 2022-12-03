@@ -123,7 +123,7 @@ WHERE
                             Created = reader.IsDBNull("Created") ? null : reader.GetDateTime("Created"),
                             Updated = reader.IsDBNull("Updated") ? null : reader.GetDateTime("Updated"),
                             Owner = reader["Owner"].ToString(),
-                            JediRank = reader.IsDBNull(ordinal) ? eJediRank.NotFromAJedi : (eJediRank)reader["Rank"]
+                            JediRankType = reader.IsDBNull(ordinal) ? eJediRank.NotFromAJedi : (eJediRank)reader["Rank"]
                         });
                     }
                 }
@@ -167,7 +167,7 @@ WHERE
                         note.Owner = reader["Owner"].ToString();
 
                         int ordinal = reader.GetOrdinal("Rank");
-                        note.JediRank = reader.IsDBNull(ordinal) ? eJediRank.NotFromAJedi : (eJediRank)reader["Rank"];
+                        note.JediRankType = reader.IsDBNull(ordinal) ? eJediRank.NotFromAJedi : (eJediRank)reader["Rank"];
                     }
                 }
             }

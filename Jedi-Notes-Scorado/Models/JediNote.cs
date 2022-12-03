@@ -16,7 +16,9 @@
         //outside of the exercise, I can see owner and Jedi Rank being split of into it's own class (JediPersonnel perhaps)
         public string Owner { get; set; }
 
-        public eJediRank JediRank { get; set; }
+        public eJediRank JediRankType { get; set; }
+
+        public string JediRank { get { return Enum.GetName(JediRankType); } }
     }
 
 
